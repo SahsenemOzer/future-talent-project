@@ -33,7 +33,7 @@
       <p class="mt-2 text-sm text-slate-300">Bilgileri gir, olustur; ekran sadece portfolyoya gecsin. QR ile acan kisi de sadece portfolyo gorur.</p>
       <form id="builder-form" class="mt-5 grid gap-3 md:grid-cols-2">
         <input id="base-url-input" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 md:col-span-2" placeholder="Canli site adresi (opsiyonel): https://kullanici.github.io/proje/">
-        <input id="name-input" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2" placeholder="Ad Soyad" value="Sahsen Emre Ozer">
+        <input id="name-input" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2" placeholder="Ad Soyad" value="Şahsenem Özer">
         <input id="title-input" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2" placeholder="Unvan" value="Junior AI Developer / University Student">
         <input id="photo-input" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 md:col-span-2" placeholder="Profil Foto URL (opsiyonel)">
         <div id="dropzone" class="dropzone rounded-lg bg-slate-900/60 px-3 py-4 text-sm text-slate-300 md:col-span-2">
@@ -42,7 +42,7 @@
           <input id="photo-file" type="file" accept="image/*" class="hidden">
           <p class="mt-1 text-xs text-slate-400">Yuklenen fotograf dogrudan portfolyoya yerlesir.</p>
         </div>
-        <textarea id="education-input" rows="3" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 md:col-span-2" placeholder="Egitim her satir: Okul|Bolum|Yil">Universite Adi|Bilgisayar Muhendisligi|2023 - Devam</textarea>
+        <textarea id="education-input" rows="3" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 md:col-span-2" placeholder="Egitim her satir: Okul|Bolum|Yil">Sakarya Uygulamalı Bilimler Üniversitesi|Bilgisayar Mühendisliği|2025 - mezun</textarea>
         <textarea id="skills-input" rows="6" class="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2 md:col-span-2" placeholder="Yetenekleri her satira bir tane yaz&#10;Ornek: Python&#10;Prompt Engineering&#10;UI Design">Python
 Prompt Engineering
 UI Design</textarea>
@@ -102,11 +102,11 @@ Smart Campus Assistant|AI destekli kampus asistani prototipi</textarea>
     let uploadedPhotoDataUrl = "";
 
     const defaultData = {
-      name: "Sahsen Emre Ozer",
+      name: "Şahsenem Özer",
       title: "Junior AI Developer / University Student",
       photo: "",
       education: [
-        { school: "Universite Adi", dept: "Bilgisayar Muhendisligi", year: "2023 - Devam" }
+        { school: "Sakarya Uygulamalı Bilimler Üniversitesi", dept: "Bilgisayar Mühendisliği", year: "2025 - mezun" }
       ],
       skills: ["Python", "Prompt Engineering", "UI Design"],
       projects: [
@@ -161,8 +161,8 @@ Smart Campus Assistant|AI destekli kampus asistani prototipi</textarea>
     }
 
     function buildDataFromForm() {
-      const name = sanitizeForQr(document.getElementById("name-input").value, 40);
-      const title = sanitizeForQr(document.getElementById("title-input").value, 50);
+      const name = short(document.getElementById("name-input").value, 60);
+      const title = short(document.getElementById("title-input").value, 80);
       const photo = uploadedPhotoDataUrl || document.getElementById("photo-input").value.trim();
       const education = parseEducation(document.getElementById("education-input").value).slice(0, 3);
       const skills = parseSkills(document.getElementById("skills-input").value).slice(0, 6).map((s) => sanitizeForQr(s, 20));
@@ -228,7 +228,7 @@ Smart Campus Assistant|AI destekli kampus asistani prototipi</textarea>
       if (projectsCompact) params.set("pr", projectsCompact);
 
       const url = `${base}?${params.toString()}`;
-      if (url.length > 700) {
+      if (url.length > 1200) {
         builderStatus.textContent = "QR verisi cok uzun. Yetenek/proje metinlerini kisalt.";
         throw new Error("QR payload too long");
       }
